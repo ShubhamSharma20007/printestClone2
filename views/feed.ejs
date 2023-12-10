@@ -1,0 +1,18 @@
+<% include ./partials/header.ejs %>
+    <div class="feed-container w-full h-screen bg-slate-600">
+        <div class="flex gap-5 flex-wrap items-center">
+            <% posts.forEach(item=>{ %>
+                <div class="card w-60 h-40 rounded-lg mt-5">
+                    <a href="./add.ejs">
+                    <img src="./uploads/<%= item?.image %>" class=" rounded-md object-cover w-full h-full " alt="">
+                    </a>
+                    <p class="text-white font-semibold ">
+                        <%= item.title %>
+                    </p>
+
+                </div>
+
+                <% }) %>
+        </div>
+    </div>
+    <% include ./partials/footer.ejs %>

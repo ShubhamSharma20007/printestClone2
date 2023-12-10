@@ -1,0 +1,48 @@
+<% include ./partials/header.ejs%>
+    <div class="main bg-slate-600 w-full h-screen ">
+        <div class="container mx-auto py-5 relative">
+            <form id="form" action="/fileupload" hidden method="post" enctype="multipart/form-data">
+                <input type="file" name="image">
+            </form>
+
+            <a href="/add" class="float-right absolute right-5 top-5 px-10 py-2 text-white font-bold bg-red-500 rounded-md">Add New Post</a>
+            <div class="flex flex-col items-center justify-center w-40 h-40 rounded-full  mx-auto min-h-fit relative  border broder-2 broder-white ">
+                <img src="./uploads/<%= user.profileImage %>" class="object-cover w-full h-full rounded-full" alt="">
+                <span id="uploadiconImg"> <i class="ri-pencil-line absolute top-[60%] right-0 text-2xl bg-slate-200 rounded-full px-1" clas></i></span>
+            </div>
+            <div class="context flex flex-col justify-center items-center">
+                <p class="text-white text-xl font-bold">
+                    <%= user.email %>
+                </p>
+                <p class="text-white text-lg font-bold">@
+                    <%= user.username %>
+                </p>
+                <button class="border-0 text-white bg-slate-700 font-bold my-4 px-5 py-2 rounded-lg">Edit</button>
+            </div>
+            <hr>
+            <div class="flex gap-5 flex-wrap items-center">
+                <% user.posts.forEach(item=>{ %>
+                    <div class="card w-60 h-40 rounded-lg mt-5">
+                        <a href="./add.ejs">
+                        <img src="./uploads/<%= item?.image %>" class=" rounded-md object-cover w-full h-full " alt="">
+                        </a>
+                        <h1 class="text-lg font-bold text-white ">
+                            <%= item.title %>
+                        </h1>
+
+                    </div>
+
+                    <% }) %>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        document.querySelector("#uploadiconImg").addEventListener('click', () => {
+            document.querySelector("#form input[type=file]").click()
+        })
+        document.querySelector("#form input[type=file]").addEventListener('change', () => {
+            document.querySelector("#form").submit()
+        })
+    </script>
+    <% include ./partials/footer.ejs%>

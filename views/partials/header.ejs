@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./stylesheet/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.6.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <% if(nav ===  true) { %>
+
+        <div class="navbar w-full h-14 flex flex-1 bg-slate-600  px-3 py-4">
+            <h1 class="text-xl text-white font-bold">Printest</h1>
+            <div class="links ml-auto flex items-center gap-5">
+                <a href="/profile" class="text-white">Profile</a>
+                <a href="/feed" class="text-white">Feed</a>
+                <a href="/logout"> <button class="bg-red-500 text-white font-semibold px-3 py-2 rounded-lg">Logout</button></a>
+            </div>
+        </div>
+        <% } else { %>
+
+            <%  } %>
