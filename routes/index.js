@@ -20,19 +20,74 @@ router.get('/register', function(req, res) {
 });
 
 
+
+
 router.get('/profile', isloggedIn, async function(req, res) {
     const user = await modelData.findOne({ username: req.session.passport.user })
         .populate("posts")
-    console.log(user)
+
     res.render('profile', { user, nav: true });
 });
 
 
 router.get('/add', isloggedIn, async function(req, res) {
     const user = await modelData.findOne({ username: req.session.passport.user })
-    const image = await user.profileImage
-    res.render('add', { image, nav: true });
+
+    res.render('add', { nav: true });
 });
+
+
+router.get('/contentimg/:id', isloggedIn, async function(req, res) {
+    const imageData = await postData.findOne({ _id: req.params.id });
+    if (!imageData) {
+        res.status(404).send('Image not found');
+
+    }
+    console.log(imageData);
+    res.render('contentimg', { nav: true, imageData });
+});
+
+// update route
+router.post("/update/:id", isloggedIn, upload.single("image"), async(req, res) => {
+    try {
+        const check = await postData.findOne({ _id: req.params.id })
+        const { title, description, image } = req.body
+        const newImage = req.file ? req.file.filename : check.image // this is mandatory condition 
+        const updatation = await postData.findByIdAndUpdate(req.params.id, { title, description, image: newImage }, { new: true })
+        console.log(updatation)
+        res.redirect('/profile')
+    } catch (error) {
+
+        console.log(error)
+    }
+})
+
+// delete route 
+
+
+
+router.delete("/delete/:id", async(req, res) => {
+    try {
+        const data = await postData.findOne({ _id: req.params.id });
+        if (!data) {
+            console.log('data not found')
+        }
+        const dele = await postData.findByIdAndDelete(req.params.id)
+        res.json({
+            message: true,
+            dele
+        })
+
+    } catch (err) {
+
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+
+
 
 
 
@@ -51,7 +106,7 @@ router.post("/fileupload", isloggedIn, upload.single("image"), async(req, res) =
 router.get("/feed", isloggedIn, async(req, res) => {
     // const user = await modelData.findOne({ username: req.session.passport.user })
     const posts = await postData.find().populate('user')
-    console.log(posts)
+
     res.render("feed", { posts, nav: true });
 })
 

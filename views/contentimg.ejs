@@ -1,0 +1,27 @@
+<% include ./partials/header.ejs %>
+
+    <form action="/update/<%= imageData.id%>" method="post" enctype="multipart/form-data">
+        <div class="w-full h-screen bg-slate-600 flex justify-center ">
+            <div class="w-[40%]  min-h-screen">
+                <div class="img-container h-48 w-full  ">
+                    <center> <img src="/uploads/<%=imageData?.image %>" width="300px" class="object-contain" alt=""></center>
+                </div>
+
+
+            </div>
+            <div class="w-[50%]  min-h-1/2 ">
+                <input type="file" name="image" value="" id="">
+
+                <label for="title" class="text-white block my-2 text-xl font-bold ">Title</label>
+                <input type="text" name="title" value="<%= imageData.title %>" class="px-3 py-1 rounded-none  w-3/4 bg-slate-100">
+
+                <label for="description" class="text-white block my-2 text-xl font-bold ">description</label>
+                <input type="text" name="description" value="<%= imageData.description %>" class="px-3 py-1 rounded-none w-3/4">
+                <button type="submit" class="btn  px-4 py-1 bg-indigo-400 block text-white font-semibold my-5">Submit</button>
+            </div>
+        </div>
+    </form>
+    <form action="/delete/<%= imageData.id %>" method="post">
+        <button type="submit" class="bg-red-500 text-white font-semibold px-3 py-2 rounded-lg">Delete</button>
+    </form>
+    <% include ./partials/footer.ejs %>
